@@ -1,20 +1,115 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voice Lock & Secure Notes</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nizhal-Vel — Women Safety System</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script async src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY"></script>
 </head>
+
 <body>
-    <div class="container">
-        <h1>🔒 Voice Secure Notes</h1>
-        <div class="terminal">
-            <textarea id="note" placeholder="Access denied. Authenticate to unlock..." disabled></textarea>
-        </div>
-        <button id="unlockBtn">🔊 Speak to Unlock</button>
-        <button id="lockBtn" disabled>🔒 Lock</button>
+<div class="wrap">
+
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">🌑</div>
+    <div>
+      <h1>Nizhal-Vel</h1>
+      <p>Women Safety System</p>
     </div>
-    <script src="script.js"></script>
+  </div>
+  <div>
+    <button id="themeToggle" class="ghost">🌗 Theme</button>
+    <label>Overlay: <input type="color" id="overlayColor" value="#FF3B30"></label>
+  </div>
+</header>
+
+<main class="main">
+
+<!-- LEFT -->
+<section class="left">
+  <div class="card">
+    <h2>Live Evidence</h2>
+    <p class="muted">Camera & microphone secured</p>
+
+    <div class="video-frame">
+      <video id="videoPreview" autoplay muted playsinline></video>
+      <canvas id="overlayCanvas" class="overlay-canvas"></canvas>
+
+      <div id="recordOverlay" class="record-overlay" hidden>
+        <div class="pulse"></div>
+        <span id="recTimer">00:00</span>
+      </div>
+    </div>
+
+    <div class="left-buttons">
+      <button id="sosButton" class="sos">⚠️ TRIGGER SOS</button>
+      <button id="snapshotBtn" class="ghost">📸 Snapshot</button>
+    </div>
+    <p>Status: <b id="statusPill">Idle</b></p>
+  </div>
+
+  <div class="card">
+    <h3>Trigger Mode</h3>
+    <select id="triggerMode">
+      <option value="single">Single Press</option>
+      <option value="double">Double Press</option>
+      <option value="multi">Press N Times</option>
+      <option value="long">Long Press</option>
+      <option value="shake">Shake Device</option>
+    </select>
+    <input id="multiCount" type="number" min="2" value="3" />
+    <input id="longMs" type="number" min="500" value="1500" />
+    <p>Shake to SOS available on mobile</p>
+  </div>
+
+  <div class="card">
+    <h3>Safety Log</h3>
+    <ul id="logList"></ul>
+  </div>
+
+  <div class="card">
+    <h3>Snapshots Gallery</h3>
+    <div id="snapshotGallery" class="snapshot-gallery"></div>
+  </div>
+</section>
+
+<!-- RIGHT -->
+<aside class="right">
+  <div class="card">
+    <h3>📍 Location</h3>
+    <p id="locText">—</p>
+    <button id="copyCoords" class="ghost">📋 Copy</button>
+    <div id="map" class="map"></div>
+  </div>
+
+  <div class="card">
+    <h3>👥 Guardians</h3>
+    <ul id="guardianList"></ul>
+  </div>
+
+  <div class="card">
+    <h3>Last Recording</h3>
+    <video id="lastVideo" controls hidden></video>
+    <button id="downloadLast" class="ghost">⬇ Download</button>
+  </div>
+
+  <div class="card">
+    <h3>Safety Stats</h3>
+    <p id="dailyCount">SOS Today: 0</p>
+    <p id="totalDuration">Total Recording: 0:00</p>
+  </div>
+</aside>
+
+</main>
+
+<div id="toastContainer"></div>
+<audio id="sosAudio" src="https://freesound.org/data/previews/316/316847_4939433-lq.mp3"></audio>
+
+</div>
+<script src="script.js"></script>
 </body>
 </html>
